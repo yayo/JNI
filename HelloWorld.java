@@ -13,6 +13,6 @@ public class HelloWorld
    {
     System.out.println(s);
     long result[]=new HelloWorld().sayHello(2,3,4);
-    System.out.println(""+(result[0]+result[1]+result[2]+result[3]));
+    System.out.println(""+result[0]+" "+result[1]+" "+result[2]+" "+result[3]);
    }
  }

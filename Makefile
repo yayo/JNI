@@ -17,4 +17,4 @@ HelloWorld.h : HelloWorld.java
 HelloWorld.o : HelloWorld.c HelloWorld.h
 	gcc -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -fPIC -c HelloWorld.c
 libhello.so : HelloWorld.o
-	gcc -shared -o libhello.so HelloWorld.o
+	gcc -shared -o libhello.so HelloWorld.o -lcrypto
