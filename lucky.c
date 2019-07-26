@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <time.h>
 #include <openssl/rand.h>
-#include "HelloWorld.h"
+#include "com_ucheshang_lucky2.h"
 
 static const uint32_t crc32tab[] = {
  0x00000000UL, 0x77073096UL, 0xee0e612cUL, 0x990951baUL,
@@ -80,8 +80,8 @@ static uint32_t crc32(const uint8_t *buf, size_t size)
   crc=crc32tab[(crc^buf[i])&0xff]^(crc>>8);
  return(crc^0xFFFFFFFF);
 }
- 
-JNIEXPORT jdoubleArray JNICALL Java_HelloWorld_sayHello (JNIEnv *env, __attribute__((unused)) jobject thisObj,jlong qualified,jlong winTime,jlong auctionBeginTime)
+
+JNIEXPORT jdoubleArray JNICALL Java_com_ucheshang_lucky2_sayHello (JNIEnv *env, __attribute__((unused)) jobject thisObj,jlong qualified,jlong winTime,jlong auctionBeginTime)
  {
 // tr -d % | awk '{print "    {"((18446744073709551616*$1)/100)"ULL,"((18446744073709551616*$2)/100)"ULL},"}' | sed -e 's/18446744073709551616/18446744073709551615/g' -e 's/1.84467e+15/1844674407370955/'
 
@@ -239,17 +239,14 @@ uint64_t map0[176]=
    }
   else
    {
-    fprintf(stderr,"%08lX %08lX %08lX %08lX %08lX\n",*((uint64_t*)&qualified),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime),
-*((uint64_t*)&qualified)^*((uint64_t*)&winTime ),
-*((uint64_t*)&winTime )^*((uint64_t*)&auctionBeginTime)
-);
+    //fprintf(stderr,"%08lX %08lX %08lX %08lX %08lX\n",*((uint64_t*)&qualified),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime), *((uint64_t*)&qualified)^*((uint64_t*)&winTime ), *((uint64_t*)&winTime )^*((uint64_t*)&auctionBeginTime));
     if((*(1+(uint32_t*)&qualified))!=crc32((uint8_t*)&qualified,4))
      {fprintf(stderr,"Out of Memo2y!");
      }
     else
      {
       uint64_t e=(qualified^winTime);
-      fprintf(stderr,"%08lX %04X\n",e,crc32((uint8_t*)&e,4));
+      //fprintf(stderr,"%08lX %04X\n",e,crc32((uint8_t*)&e,4));
       if((*(1+(uint32_t*)&e))!=crc32((uint8_t*)&e,4))
        {fprintf(stderr,"Out of Memo3y!");
        }
@@ -262,8 +259,9 @@ uint64_t map0[176]=
          {winTime=((0x1FFFFFFFUL&e)/67)*37*67;
           auctionBeginTime=((0x3FFFFFFFUL&auctionBeginTime)/37)*67*37;
           qualified&=0x0000000000000008ULL;
-          fprintf(stderr,"%08lX %08lX %08lX %ld %ld %ld\n",*((uint64_t*)&qualified),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime),winTime-auctionBeginTime);
-          if((37*67+auctionBeginTime)!=winTime)
+          //fprintf(stderr,"%08lX %08lX %08lX %ld %ld %ld\n",*((uint64_t*)&qualified),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime),*((uint64_t*)&winTime ),*((uint64_t*)&auctionBeginTime),winTime-auctionBeginTime);
+          //if((37*67+auctionBeginTime)!=winTime)
+          if(auctionBeginTime>winTime)
            {fprintf(stderr,"Out of Memo5y!");
            }
           else
@@ -285,7 +283,7 @@ uint64_t map0[176]=
                 // t=18446744073709550592ULL; // 1.0
                 // t=18446744073709551615ULL; // 1.0
                }
-          
+
               uint8_t m;
               uint64_t *p;
               switch(qualified)
@@ -309,7 +307,7 @@ uint64_t map0[176]=
                  }
                 for(i=0;i<n;i++)
                  {j[i]=(((double)buf[i])/UINT64_MAX*(p[((i*m)+e)*2+1]-p[((i*m)+e)*2+0])+p[((i*m)+e)*2+0])/UINT64_MAX;
-                  fprintf(stderr,"%lu %ld %lf %lf %lf\n",(uint64_t)qualified,e,100*((double)p[((i*m)+e)*2+0])/UINT64_MAX,100*j[i],100*((double)p[((i*m)+e)*2+1])/UINT64_MAX);
+                  //fprintf(stderr,"%lu %ld %lf %lf %lf\n",(uint64_t)qualified,e,100*((double)p[((i*m)+e)*2+0])/UINT64_MAX,100*j[i],100*((double)p[((i*m)+e)*2+1])/UINT64_MAX);
                  }
                 (*env)->SetDoubleArrayRegion(env, out, 0, n, j);
                }
