@@ -15,6 +15,6 @@ HelloWorld.class : HelloWorld.java
 HelloWorld.h : HelloWorld.java
 	javac -h . HelloWorld.java
 HelloWorld.o : HelloWorld.c HelloWorld.h
-	gcc -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -fPIC -c HelloWorld.c
+	gcc -Wall -Wextra -Werror -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -fPIC -c HelloWorld.c
 libhello.so : HelloWorld.o
-	gcc -shared -o libhello.so HelloWorld.o -lcrypto
+	gcc -Wall -Wextra -Werror -shared -o libhello.so HelloWorld.o -lcrypto
